@@ -1,0 +1,41 @@
+﻿
+@model IEnumerable<Resenje_2.Models.Student>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>All Students</h2>
+
+<h2> </h2>
+<button type="submit"> @Html.ActionLink("New Student", "New")</button>
+<h2> </h2>
+
+@if (Model.Count() == 0)
+{
+    <p>There are no students.</p>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                <tr>
+                    <td>@Model.ElementAt(i).Name</td>
+                    <td>@Model.ElementAt(i).Surname</td>
+                    <td>@Html.ActionLink("Details", "Details", "Students", new { id = Model.ElementAt(i).Id }, null)</td>
+                    <td>@Html.ActionLink("Edit", "Edit", "Students", new { id = Model.ElementAt(i).Id }, null)</td>
+                    <td>@Html.ActionLink("Delete", "Delete", "Students", new { id = Model.ElementAt(i).Id }, null)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
