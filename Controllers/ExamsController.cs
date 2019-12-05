@@ -76,8 +76,7 @@ namespace Resenje_2.Controllers
             {
                 exam = new Exam(),
                 courses = courses,
-                students = students               
-
+                students = students                
             };
             return View("ExamForm", viewModel);
         }
