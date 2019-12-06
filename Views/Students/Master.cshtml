@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Resenje_2.ViewModels.StudentViewModel>
+@{
+    ViewBag.Title = "Master";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>event.target demo</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+<body>
+    <h2>Master-Detail Page</h2>
+
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li>
+                @item.student.Name @item.student.Surname
+                <ul>
+                    @foreach (var i in item.exams)
+                    {
+                        <li>@i.Course.Name</li>
+                    }
+                </ul>
+            </li>
+        }
+    </ul>
+
+
+    <script>
+        function handler(event) {
+            var target = $(event.target);
+            if (target.is("li")) {
+                target.children().toggle();
+            }
+        }
+        $("ul").click(handler).find("ul").hide();
+    </script>
+
+</body>
+</html>

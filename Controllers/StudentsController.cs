@@ -1,4 +1,5 @@
 ﻿using Resenje_2.Models;
+using Resenje_2.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,6 +71,22 @@ namespace Resenje_2.Controllers
         {
             var student = new Student();
             return View("StudentForm", student);
+        }
+        public ActionResult Master()
+        {
+            List<StudentViewModel> master;
+            master = new List<StudentViewModel>();
+            foreach (var item in _context.Students.ToList())
+            {
+                var viewModel = new StudentViewModel()
+                {
+                    student = item,
+                    courses = _context.Courses.ToList(),
+                    exams = _context.Exams.Where(m => m.StudentId == item.Id).ToList()
+                };
+                master.Add(viewModel);
+            }
+            return View(master);
         }
     }
 }

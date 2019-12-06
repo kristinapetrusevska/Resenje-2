@@ -23,8 +23,8 @@ namespace Resenje_2.Controllers
         // GET: Exams
         public ActionResult Index()
         {
-            var exams = _context.Exams.Include(m=>m.Course).Include(m=>m.Student).ToList();
-            
+            var exams = _context.Exams.Include(m => m.Course).Include(m => m.Student).ToList();
+
             return View(exams);
         }
         public ActionResult Delete(int id)
@@ -42,7 +42,7 @@ namespace Resenje_2.Controllers
             {
                 exam = exam,
                 students = _context.Students.ToList(),
-                courses=_context.Courses.ToList()
+                courses = _context.Courses.ToList()
 
             };
             return View("ExamForm", viewModel);
@@ -62,7 +62,7 @@ namespace Resenje_2.Controllers
                 examInDb.CourseId = exam.CourseId;
                 examInDb.StudentId = exam.StudentId;
                 examInDb.Grade = exam.Grade;
-                
+
             }
             _context.SaveChanges();
             return RedirectToAction("Index", "Exams");
@@ -71,14 +71,15 @@ namespace Resenje_2.Controllers
         public ActionResult New()
         {
             var courses = _context.Courses.ToList();
-            var students=_context.Students.ToList();
+            var students = _context.Students.ToList();
             var viewModel = new ExamViewModel()
             {
                 exam = new Exam(),
                 courses = courses,
-                students = students                
+                students = students
             };
             return View("ExamForm", viewModel);
         }
+        
     }
 }
