@@ -17,24 +17,26 @@
 }
 else
 {
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover" style="table-layout:fixed; width:40%">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Surname</th>
+                <th style="font-size:16px; text-align:center">Id</th>
+                <th style="font-size:16px; text-align:center">Name</th>
             </tr>
         </thead>
 
         <tbody>
             @for (int i = 0; i < Model.Count(); i++)
             {
-                <tr>
-                    <td>@Model.ElementAt(i).Name</td>
-                    <td>@Model.ElementAt(i).Surname</td>
-                    <td>@Html.ActionLink("Details", "Details", "Students", new { id = Model.ElementAt(i).Id }, null)</td>
-                    <td>@Html.ActionLink("Edit", "Edit", "Students", new { id = Model.ElementAt(i).Id }, null)</td>
-                    <td>@Html.ActionLink("Delete", "Delete", "Students", new { id = Model.ElementAt(i).Id }, null)</td>
-                </tr>
+            <tr>
+                <td style="font-size:15px; text-align:center">@Model.ElementAt(i).Id</td>
+                <td style="font-size:15px; text-align:center">@Model.ElementAt(i).Name @Model.ElementAt(i).Surname </td>
+                <td style="border-bottom:hidden; border-top:hidden; border-right:hidden; font-size:12px">
+                    @Html.ActionLink("Details", "Details", "Students", new { id = Model.ElementAt(i).Id }, null) |
+                @Html.ActionLink("Edit", "Edit", "Students", new { id = Model.ElementAt(i).Id }, null) |
+                @Html.ActionLink("Delete", "Delete", "Students", new { id = Model.ElementAt(i).Id }, null)
+            </td>
+            </tr>
             }
         </tbody>
     </table>

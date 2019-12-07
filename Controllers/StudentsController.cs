@@ -10,16 +10,27 @@ namespace Resenje_2.Controllers
 {
     public class StudentsController : Controller
     {
-        public ApplicationDbContext _context;
+        private IStoreAppContext _context= new ApplicationDbContext();
+
         public StudentsController()
         {
-            _context = new ApplicationDbContext();
+           
+        }
+        public StudentsController(IStoreAppContext context)
+        {
+            _context = context;
         }
         protected override void Dispose(bool disposing)
         {
             _context.Dispose();
         }
         //Students
+        public int Kvadrat(int num)
+        {
+            return num * num;
+        }
+        
+
         public ActionResult Index()
         {
             var students = _context.Students.ToList();
@@ -47,11 +58,13 @@ namespace Resenje_2.Controllers
             return View("StudentForm", student);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Student student)
         {
             if (!ModelState.IsValid)
-            {               
-                return View("CustomerForm", student);
+            {
+                var stud = new Student();       
+                return View("CustomerForm", stud);
             }
             if (student.Id == 0)
                 _context.Students.Add(student);

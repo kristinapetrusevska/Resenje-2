@@ -48,11 +48,20 @@ namespace Resenje_2.Controllers
             return View("ExamForm", viewModel);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Exam exam)
         {
             if (!ModelState.IsValid)
             {
-                return View("ExamForm", exam);
+                var ex = new Exam();
+                var viewModel = new ExamViewModel()
+                {
+                    exam = ex,
+                    courses = _context.Courses.ToList(),
+                    students=_context.Students.ToList()
+                    
+                };
+                return View("ExamForm", viewModel);
             }
             if (exam.Id == 0)
                 _context.Exams.Add(exam);

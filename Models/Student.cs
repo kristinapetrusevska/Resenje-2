@@ -10,9 +10,11 @@ namespace Resenje_2.Models
     {
         public int Id { get; set; }
 
+        [Required (ErrorMessage="Please enter a name.")]
         [StringLength(20)]
         public string Name { get; set; }
 
+        [Required(ErrorMessage = "Please enter a surname.")]
         [StringLength(20)]
         public string Surname { get; set; }
 
@@ -20,8 +22,6 @@ namespace Resenje_2.Models
         public string Address { get; set; }
 
         [StringLength(20)]
-        public string Town { get; set; }
-
-        
+        public string Town { get; set; }               
     }
 }

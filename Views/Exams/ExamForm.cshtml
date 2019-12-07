@@ -4,15 +4,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (Model != null)
-{
-    <h2>Edit Exam</h2>
-}
-else
-{
-    <h2>New Exam</h2>
 
-}
+    <h2>Exam</h2>
+
 
 @using (Html.BeginForm("Save", "Exams"))
 {
@@ -20,18 +14,18 @@ else
 
     <div class="form-group">
         @Html.LabelFor(m => m.exam.StudentId)
-        @Html.DropDownListFor(m => m.exam.StudentId, new SelectList(Model.students, "Id", "Id"), "Select Student", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.exam.StudentId, new SelectList(Model.students, "Id", "Id"), "Select Student..", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.exam.StudentId)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.exam.CourseId)
-        @Html.DropDownListFor(m => m.exam.CourseId, new SelectList(Model.courses, "Id", "Name"), "Select Course", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.exam.CourseId, new SelectList(Model.courses, "Id", "Name"), "Select Course..", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.exam.CourseId)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.exam.Grade)
-        @Html.TextBoxFor(m=>m.exam.Grade)
-        @Html.ValidationMessageFor(m => m.exam.CourseId)
+        @Html.TextBoxFor(m=>m.exam.Grade)<br />
+        @Html.ValidationMessageFor(m => m.exam.Grade)
     </div>
 
     @Html.HiddenFor(m => m.exam.Id)
