@@ -16,12 +16,14 @@ namespace Resenje_2.Models
         public int Grade { get; set; }
         public Student Student { get; set; }
      
-        [Required]       
+        [Required] 
+        [Display(Name ="Student")]
         public int StudentId { get; set; }
         public Course Course { get; set; }
 
         [Required]
         [CheckForValidExam]
+        [Display(Name ="Course")]
         public int CourseId { get; set; }
     }
 }

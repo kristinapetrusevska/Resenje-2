@@ -13,32 +13,38 @@
 </head>
 <body>
     <h2>Master-Detail Page</h2>
-
+    <table class="table table-bordered table-hover" style="table-layout:fixed; width:40%">
+        <tbody>
+            <th>Name</th>
+            <tr>
     <ul>
         @foreach (var item in Model)
         {
-            <li>
+            <li style="font-size:15px">
                 @item.student.Name @item.student.Surname
                 <ul>
                     @foreach (var i in item.exams)
                     {
-                        <li>@i.Course.Name</li>
+                        <li style="font-size:13px">@i.Course.Name</li>
                     }
                 </ul>
             </li>
         }
     </ul>
+              </tr>
+        </tbody>
+        </table>
 
 
-    <script>
-        function handler(event) {
-            var target = $(event.target);
-            if (target.is("li")) {
-                target.children().toggle();
+        <script>
+            function handler(event) {
+                var target = $(event.target);
+                if (target.is("li")) {
+                    target.children().toggle();
+                }
             }
-        }
-        $("ul").click(handler).find("ul").hide();
-    </script>
+            $("ul").click(handler).find("ul").hide();
+        </script>
 
 </body>
 </html>
