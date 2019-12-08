@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace Resenje_2.Controllers
 {
@@ -31,10 +32,22 @@ namespace Resenje_2.Controllers
         }
         
 
-        public ActionResult Index(string id, string sortOrder)
+        public ActionResult Index(string id, string currentFilter, string sortOrder, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.IdSortParm = sortOrder == "Id" ? "id_desc" : "Id";
+
+            if (id != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                id = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = id;
             var students = new List<Student>();
             
             if (!String.IsNullOrEmpty(id))
@@ -75,7 +88,11 @@ namespace Resenje_2.Controllers
                     students = students.OrderBy(s => s.Name).ToList();
                     break;
             }
-            return View(students);
+
+            int pageSize = 6;
+            int pageNumber = (page ?? 1);
+            return View(students.ToPagedList(pageNumber, pageSize));
+            
         }
         
         //Details/1

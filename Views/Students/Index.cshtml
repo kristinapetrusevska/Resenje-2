@@ -1,5 +1,8 @@
-﻿
-@model IEnumerable<Resenje_2.Models.Student>
+﻿@model PagedList.IPagedList<Resenje_2.Models.Student>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -19,6 +22,7 @@
     </p>
 </form>
 
+
 @if (!HttpContext.Current.Request.QueryString.Get("id").IsEmpty())
 {
     <h5>@Html.ActionLink("Go back to original list", "Index", "Students")</h5>
@@ -31,11 +35,11 @@
 }
 else
 {
-    <table class="table table-bordered table-hover" style="table-layout:fixed; width:40%">
+    <table class="table table-bordered table-hover" style="table-layout:fixed; width:60%">
         <thead>
             <tr>
-                <th style="font-size:16px; text-align:center">@Html.ActionLink("Id", "Index", new { sortOrder = ViewBag.IdSortParm })</th>
-                <th style="font-size:16px; text-align:center">@Html.ActionLink("Name","Index",new { sortOrder = ViewBag.NameSortParm })</th>
+                <th style="font-size:16px; text-align:center">@Html.ActionLink("Id", "Index", new { sortOrder = ViewBag.IdSortParm, currentFilter = ViewBag.CurrentFilter })</th>
+                <th style="font-size:16px; text-align:center">@Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })</th>
             </tr>
         </thead>
 
@@ -54,4 +58,10 @@ else
             }
         </tbody>
     </table>
+    <br />
+
 }
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
