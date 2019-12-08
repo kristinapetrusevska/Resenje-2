@@ -31,11 +31,36 @@ namespace Resenje_2.Controllers
         }
         
 
-        public ActionResult Index()
+        public ActionResult Index(string id)
         {
-            var students = _context.Students.ToList();
+            var students = new List<Student>();
+            
+            if (!String.IsNullOrEmpty(id))
+            {
+                var rez = 0;
+              
+                 students = _context.Students.Where(s => s.Name.Contains(id) || s.Surname.Contains(id)).ToList(); 
+
+                if (id.Contains(" "))
+                {
+                    var fullName = id.Split(' ');
+                    string str1 = fullName[0];
+                    string str2 = fullName[1];
+                    students = _context.Students.Where(s => (s.Name.Contains(str1) && s.Surname.Contains(str2))
+                                                || (s.Name.Contains(str2) && s.Surname.Contains(str1))).ToList();
+                }
+                if (Int32.TryParse(id, out rez))
+                { students = _context.Students.Where(s => s.Id == rez).ToList(); }
+                
+
+            }
+            else
+            {
+                students = _context.Students.ToList();
+            }
             return View(students);
         }
+        
         //Details/1
         public ActionResult Details(int id)
         {
@@ -85,19 +110,45 @@ namespace Resenje_2.Controllers
             var student = new Student();
             return View("StudentForm", student);
         }
-        public ActionResult Master()
+        public ActionResult Master(string id)
         {
             List<StudentViewModel> master;
             master = new List<StudentViewModel>();
-            foreach (var item in _context.Students.ToList())
+            if (!String.IsNullOrEmpty(id))
             {
-                var viewModel = new StudentViewModel()
+                foreach (var item in _context.Students.ToList())
                 {
-                    student = item,
-                    courses = _context.Courses.ToList(),
-                    exams = _context.Exams.Where(m => m.StudentId == item.Id).ToList()
-                };
-                master.Add(viewModel);
+                    var viewModel = new StudentViewModel()
+                    {
+                        student = item,
+                        courses = _context.Courses.ToList(),
+                        exams = _context.Exams.Where(m => m.StudentId == item.Id).ToList()
+                    };
+                    foreach (var it in viewModel.exams.ToList())
+                    {
+                        if (it.Course.Name.Contains(id) || it.Course.Name.Contains(id.First().ToString().ToUpper()))
+                        {
+                            master.Add(viewModel);
+                            break;
+                        }
+                    }
+                }
+
+
+            }
+            else
+            {
+               
+                foreach (var item in _context.Students.ToList())
+                {
+                    var viewModel = new StudentViewModel()
+                    {
+                        student = item,
+                        courses = _context.Courses.ToList(),
+                        exams = _context.Exams.Where(m => m.StudentId == item.Id).ToList()
+                    };
+                    master.Add(viewModel);
+                }
             }
             return View(master);
         }

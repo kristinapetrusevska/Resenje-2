@@ -11,6 +11,20 @@
 <button type="submit"> @Html.ActionLink("New Student", "New")</button>
 <h2> </h2>
 
+<form asp-controller="Students" asp-action="Index">
+    <p>
+        <input type="text" name="id">
+        <input type="submit" value="Search" />
+
+    </p>
+</form>
+
+@if (!HttpContext.Current.Request.QueryString.Get("id").IsEmpty())
+{
+    <h5>@Html.ActionLink("Go back to original list", "Index", "Students")</h5>
+}
+
+
 @if (Model.Count() == 0)
 {
     <p>There are no students.</p>
@@ -28,15 +42,15 @@ else
         <tbody>
             @for (int i = 0; i < Model.Count(); i++)
             {
-            <tr>
-                <td style="font-size:15px; text-align:center">@Model.ElementAt(i).Id</td>
-                <td style="font-size:15px; text-align:center">@Model.ElementAt(i).Name @Model.ElementAt(i).Surname </td>
-                <td style="border-bottom:hidden; border-top:hidden; border-right:hidden; font-size:12px">
-                    @Html.ActionLink("Details", "Details", "Students", new { id = Model.ElementAt(i).Id }, null) |
-                @Html.ActionLink("Edit", "Edit", "Students", new { id = Model.ElementAt(i).Id }, null) |
-                @Html.ActionLink("Delete", "Delete", "Students", new { id = Model.ElementAt(i).Id }, null)
-            </td>
-            </tr>
+                <tr>
+                    <td style="font-size:15px; text-align:center">@Model.ElementAt(i).Id</td>
+                    <td style="font-size:15px; text-align:center">@Model.ElementAt(i).Name @Model.ElementAt(i).Surname </td>
+                    <td style="border-bottom:hidden; border-top:hidden; border-right:hidden; font-size:12px">
+                        @Html.ActionLink("Details", "Details", "Students", new { id = Model.ElementAt(i).Id }, null) |
+                        @Html.ActionLink("Edit", "Edit", "Students", new { id = Model.ElementAt(i).Id }, null) |
+                        @Html.ActionLink("Delete", "Delete", "Students", new { id = Model.ElementAt(i).Id }, null)
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
