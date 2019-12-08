@@ -17,9 +17,15 @@ else
     <table class="table table-bordered table-hover" style="table-layout:fixed; width:45%">
         <thead>
             <tr>
-                <th style="text-align:center">Student</th>
-                <th style="text-align:center">Course</th>
-                <th style="text-align:center">Grade</th>
+                <th style="text-align:center">
+                    @Html.ActionLink("Student", "Index", new { sortOrder = ViewBag.NameSortParm })
+                </th>
+                <th style="text-align:center">
+                    @Html.ActionLink("Course", "Index", new { sortOrder = ViewBag.CourseSortParm })
+                </th>
+                <th style="text-align:center">
+                    @Html.ActionLink("Grade", "Index", new { sortOrder = ViewBag.GradeSortParm })
+                </th>
             </tr>
         </thead>
 

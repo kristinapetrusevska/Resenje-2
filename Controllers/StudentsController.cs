@@ -31,8 +31,10 @@ namespace Resenje_2.Controllers
         }
         
 
-        public ActionResult Index(string id)
+        public ActionResult Index(string id, string sortOrder)
         {
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.IdSortParm = sortOrder == "Id" ? "id_desc" : "Id";
             var students = new List<Student>();
             
             if (!String.IsNullOrEmpty(id))
@@ -57,6 +59,21 @@ namespace Resenje_2.Controllers
             else
             {
                 students = _context.Students.ToList();
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    students = students.OrderByDescending(s => s.Name).ToList();
+                    break;
+                case "Id":
+                    students = students.OrderBy(s => s.Id).ToList();
+                    break;
+                case "id_desc":
+                    students = students.OrderByDescending(s => s.Id).ToList();
+                    break;
+                default:
+                    students = students.OrderBy(s => s.Name).ToList();
+                    break;
             }
             return View(students);
         }

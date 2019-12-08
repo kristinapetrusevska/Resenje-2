@@ -21,9 +21,34 @@ namespace Resenje_2.Controllers
             _context.Dispose();
         }
         // GET: Exams
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.CourseSortParm = sortOrder == "Course" ? "course_desc" : "Course";
+            ViewBag.GradeSortParm = sortOrder == "Grade" ? "grade_desc" : "Grade";
+
             var exams = _context.Exams.Include(m => m.Course).Include(m => m.Student).ToList();
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    exams = exams.OrderByDescending(s => s.Student.Name).ToList();
+                    break;
+                case "Course":
+                    exams = exams.OrderBy(s => s.Course.Name).ToList();
+                    break;
+                case "course_desc":
+                    exams = exams.OrderByDescending(s => s.Course.Name).ToList();
+                    break;
+                case "Grade":
+                    exams = exams.OrderBy(s => s.Grade).ToList();
+                    break;
+                case "grade_desc":
+                    exams = exams.OrderByDescending(s => s.Grade).ToList();
+                    break;
+                default:
+                    exams = exams.OrderBy(s => s.Student.Name).ToList();
+                    break;
+            }
 
             return View(exams);
         }
