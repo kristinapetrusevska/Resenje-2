@@ -12,11 +12,9 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <body>
+
     <h2>Master-Detail Page</h2>
-    <table class="table table-bordered table-hover" style="table-layout:fixed; width:40%">
-        <tbody>
-            <th>Name</th>
-            <tr>
+    
     <ul>
         @foreach (var item in Model)
         {
@@ -31,11 +29,7 @@
             </li>
         }
     </ul>
-              </tr>
-        </tbody>
-        </table>
-
-
+             
         <script>
             function handler(event) {
                 var target = $(event.target);
