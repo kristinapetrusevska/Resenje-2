@@ -6,18 +6,19 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using System.Text.RegularExpressions;
 
 namespace Resenje_2.Controllers
 {
     public class StudentsController : Controller
     {
-        private IStoreAppContext _context= new ApplicationDbContext();
+        private ApplicationDbContext _context= new ApplicationDbContext();
 
         public StudentsController()
         {
            
         }
-        public StudentsController(IStoreAppContext context)
+        public StudentsController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -160,7 +161,7 @@ namespace Resenje_2.Controllers
                     };
                     foreach (var it in viewModel.exams.ToList())
                     {
-                        if (it.Course.Name.Contains(id) || it.Course.Name.Contains(id.First().ToString().ToUpper()))
+                        if (it.Course.Name.Contains(id) || Regex.IsMatch(id, Regex.Escape(it.Course.Name), RegexOptions.IgnoreCase))
                         {
                             master.Add(viewModel);
                             break;

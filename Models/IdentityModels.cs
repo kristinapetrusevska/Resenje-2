@@ -18,7 +18,7 @@ namespace Resenje_2.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>,IStoreAppContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Student> Students { get; set; }
         public DbSet<Course> Courses { get; set; }
@@ -33,11 +33,8 @@ namespace Resenje_2.Models
             return new ApplicationDbContext();
         }
 
-        public void MarkAsModified(Student item)
-        {
-            Entry(item).State = EntityState.Modified;
-        }
-
         
+
+
     }
 }
