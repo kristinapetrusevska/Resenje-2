@@ -74,7 +74,7 @@ namespace Resenje_2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(Exam exam)
+        public ActionResult Save(Exam exam, FormCollection formValues)
         {
             if (!ModelState.IsValid)
             {
@@ -89,13 +89,21 @@ namespace Resenje_2.Controllers
                 return View("ExamForm", viewModel);
             }
             if (exam.Id == 0)
-                _context.Exams.Add(exam);
+            { _context.Exams.Add(exam);
+                _context.SaveChanges(); }
+
             else
             {
-                var examInDb = _context.Exams.Single(c => c.Id == exam.Id);
-                examInDb.CourseId = exam.CourseId;
-                examInDb.StudentId = exam.StudentId;
-                examInDb.Grade = exam.Grade;
+                var examInDb = _context.Exams.Find(exam.Id);
+                // if (TryUpdateModel(examInDb,new string[] { "exam.StudentId", "exam.CourseId", "exam.Grade"}))
+                //examInDb.CourseId = exam.CourseId;
+                //examInDb.StudentId = exam.StudentId;
+                //examInDb.Grade = exam.Grade;
+                //UpdateModel(examInDb);
+                examInDb.CourseId = Int32.Parse(Request.Form["exam.CourseId"]);
+                examInDb.StudentId = Int32.Parse(Request.Form["exam.StudentId"]);
+                examInDb.Grade = Int32.Parse(Request.Form["exam.Grade"]);
+                _context.SaveChanges();
 
             }
             _context.SaveChanges();

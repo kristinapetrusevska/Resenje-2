@@ -15,7 +15,7 @@ namespace Resenje_2.Models
             var exam = (Exam)validationContext.ObjectInstance;
             foreach(var ex in _context.Exams)
             {
-                if(ex.StudentId == exam.StudentId && ex.CourseId == exam.CourseId)
+                if(ex.StudentId == exam.StudentId && ex.CourseId == exam.CourseId && ex.Id == 0)
                 {
                     return new ValidationResult("A student cannot have more than 1 grade for a given course.");
                 }

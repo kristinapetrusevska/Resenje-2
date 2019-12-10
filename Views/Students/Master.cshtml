@@ -23,6 +23,11 @@
         </p>
     </form>
 
+    @if (!HttpContext.Current.Request.QueryString.Get("id").IsEmpty())
+    {
+        <h5>@Html.ActionLink("Go back to original list", "Master", "Students")</h5>
+    }
+
     <ul>
         @foreach (var item in Model)
         {
