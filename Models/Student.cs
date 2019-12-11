@@ -22,6 +22,10 @@ namespace Resenje_2.Models
         public string Address { get; set; }
 
         [StringLength(20)]
-        public string Town { get; set; }               
+        public string Town { get; set; }      
+        public string FullName()
+        {
+            return Name + " " + Surname;
+        }
     }
 }

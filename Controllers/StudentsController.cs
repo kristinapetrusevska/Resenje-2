@@ -14,10 +14,7 @@ namespace Resenje_2.Controllers
     {
         private ApplicationDbContext _context= new ApplicationDbContext();
 
-        public StudentsController()
-        {
-           
-        }
+       public StudentsController() { }
         public StudentsController(ApplicationDbContext context)
         {
             _context = context;
@@ -186,6 +183,34 @@ namespace Resenje_2.Controllers
                 }
             }
             return View(master);
+        }
+        public List<Student> GetAll()
+        {
+            List<Student> output = new List<Student>()
+            {
+                new Student
+                {
+                    Id=0,
+                    Name="Name1",
+                    Surname="Sruname2"
+                },new Student
+                {
+                    Id=2,
+                    Name="Name1",
+                    Surname="Sruname2"
+                },new Student
+                {
+                    Id=3,
+                    Name="Name1",
+                    Surname="Sruname2"
+                },new Student
+                {
+                    Id=4,
+                    Name="Name1",
+                    Surname="Sruname2"
+                }
+            };
+            return output;
         }
     }
 }
