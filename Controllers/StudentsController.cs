@@ -30,39 +30,39 @@ namespace Resenje_2.Controllers
         }
         
 
-        public ActionResult Index(string id, string currentFilter, string sortOrder, int? page)
+        public ActionResult Index(string searchString, string currentFilter, string sortOrder, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.IdSortParm = sortOrder == "Id" ? "id_desc" : "Id";
 
-            if (id != null)
+            if (searchString != null)
             {
                 page = 1;
             }
             else
             {
-                id = currentFilter;
+                searchString = currentFilter;
             }
 
-            ViewBag.CurrentFilter = id;
+            ViewBag.CurrentFilter = searchString;
             var students = new List<Student>();
             
-            if (!String.IsNullOrEmpty(id))
+            if (!String.IsNullOrEmpty(searchString))
             {
                 var rez = 0;
               
-                 students = _context.Students.Where(s => s.Name.Contains(id) || s.Surname.Contains(id)).ToList(); 
+                 students = _context.Students.Where(s => s.Name.Contains(searchString) || s.Surname.Contains(searchString)).ToList(); 
 
-                if (id.Contains(" "))
+                if (searchString.Contains(" "))
                 {
-                    var fullName = id.Split(' ');
+                    var fullName = searchString.Split(' ');
                     string str1 = fullName[0];
                     string str2 = fullName[1];
                     students = _context.Students.Where(s => (s.Name.Contains(str1) && s.Surname.Contains(str2))
                                                 || (s.Name.Contains(str2) && s.Surname.Contains(str1))).ToList();
                 }
-                if (Int32.TryParse(id, out rez))
+                if (Int32.TryParse(searchString, out rez))
                 { students = _context.Students.Where(s => s.Id == rez).ToList(); }
                 
 
@@ -89,6 +89,7 @@ namespace Resenje_2.Controllers
 
             int pageSize = 6;
             int pageNumber = (page ?? 1);
+            ViewBag.SearchFilter = searchString;
             return View(students.ToPagedList(pageNumber, pageSize));
             
         }

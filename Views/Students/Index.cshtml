@@ -16,7 +16,7 @@
 
 <form asp-controller="Students" asp-action="Index">
     <p>
-        <input type="text" name="id">
+        <input type="text" name="id" value="@ViewBag.SearchFilter">
         <input type="submit" value="Search" />
 
     </p>
